@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-5+y(hc*ta^p%@^nge7k0i3fy^%u3y88*vuxd%mw&wrk=d=%bf$
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['librarymanagement-zq9i.onrender.com', 'localhost', '127.0.0.1']
 
 
 LOGIN_URL = '/login/'

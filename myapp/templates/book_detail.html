@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ user.username }}'s Profile - Library Management System{% endblock %}
+
+{% block content %}
+<body>
+    <h1>{{ book.title }}</h1>
+    <p><strong>Author:</strong> {{ book.author }}</p>
+    <p><strong>Published:</strong> {{ book.published_date }}</p>
+    <p><strong>Description:</strong> {{ book.description }}</p>
+
+    {% if book.taken_by %}
+        <p><strong>This book has been taken out by:</strong>
+            <a href="{% url 'user_profile' book.taken_by.username %}">{{ book.taken_by.username }}</a>
+        </p>
+        <p><strong>Loan Period:</strong> {{ book.loan_period_days }} days</p>
+        <p><strong>Due Date:</strong> {{ book.due_date }}</p>
+
+        {% if book.due_date and book.due_date < now %}
+            <p><strong>This book is overdue!</strong></p>
+        {% endif %}
+
+        {% if book.taken_by == user %}
+            <!-- Only allow the current user to return the book -->
+            <form method="post" action="{% url 'return_book' book.id %}">
+                {% csrf_token %}
+                <button type="submit">Return Book</button>
+            </form>
+        {% endif %}
+    {% else %}
+        <p>This book is available for checkout.</p>
+        <form method="post" action="{% url 'take_out_book' book.id %}">
+            {% csrf_token %}
+            <button type="submit">Take Out Book</button>
+        </form>
+    {% endif %}
+
+    <a href="{% url 'home' %}">Back to Home</a>
+</body>
+{% endblock %}

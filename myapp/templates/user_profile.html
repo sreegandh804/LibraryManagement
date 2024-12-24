@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ user.username }}'s Profile - Library Management System{% endblock %}
+
+{% block content %}
+<header>
+    <h1>{{ user.username }}'s Profile</h1>
+</header>
+    <h2>Books Taken Out:</h2>
+    {% if books_taken_out %}
+        <ul>
+        {% for book in books_taken_out %}
+            <li>
+                <a href="{% url 'book_detail' book.id %}">{{ book.title }}</a>
+                (Due Date: {{ book.due_date }})
+                {% if book.due_date and book.due_date < now %}
+                    <span style="color:red;">(Overdue)</span>
+                {% endif %}
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>This user has not taken out any books.</p>
+    {% endif %}
+
+    <a href="{% url 'home' %}">Back to Home</a>
+{% endblock %}

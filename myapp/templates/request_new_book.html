@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ user.username }}'s Profile - Library Management System{% endblock %}
+
+{% block content %}
+
+<body>
+<header>
+    <h1>Request a New Book</h1>
+    </header>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit Request</button>
+    </form>
+    <a href="{% url 'home' %}">Back to Home</a>
+</body>
+{% endblock %}

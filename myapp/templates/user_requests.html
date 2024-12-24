@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ user.username }}'s Profile - Library Management System{% endblock %}
+
+{% block content %}
+    <header>
+        <h1>Your Book Requests</h1>
+    </header>
+
+    <main>
+        {% if requests %}
+            <!-- Book Requests Table -->
+            <section>
+                <table border="1" cellpadding="10">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Author</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                            <th>Request Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for request in requests %}
+                            <tr>
+                                <td>{{ request.title }}</td>
+                                <td>{{ request.author }}</td>
+                                <td>{{ request.description }}</td>
+                                <td>{{ request.get_status_display }}</td>
+                                <td>{{ request.request_date }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </section>
+        {% else %}
+            <p>You have not made any book requests yet.</p>
+        {% endif %}
+    </main>
+{% endblock %}

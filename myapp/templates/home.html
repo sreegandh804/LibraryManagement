@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ user.username }}'s Profile - Library Management System{% endblock %}
+
+{% block content %}
+
+        {% if user.is_authenticated %}
+            <!-- Welcome Message -->
+            <section>
+                <p>Hello, <strong>{{ user.username }}</strong>!</p>
+            </section>
+
+            <!-- Search and Filter Section -->
+            <section>
+                <h2>Search and Filter Books</h2>
+                <form method="get" action="{% url 'home' %}">
+                    <input type="text" name="q" placeholder="Search..." value="{{ search_query }}">
+                    <select name="field">
+                        <option value="title" {% if search_field == "title" %}selected{% endif %}>Book Title</option>
+                        <option value="author" {% if search_field == "author" %}selected{% endif %}>Author</option>
+                        <option value="registered_user" {% if search_field == "registered_user" %}selected{% endif %}>Registered User</option>
+                    </select>
+                    <select name="availability">
+                        <option value="" {% if availability_filter == "" %}selected{% endif %}>All</option>
+                        <option value="available" {% if availability_filter == "available" %}selected{% endif %}>Available</option>
+                        <option value="taken" {% if availability_filter == "taken" %}selected{% endif %}>Taken</option>
+                    </select>
+                    <button type="submit">Search</button>
+                </form>
+            </section>
+
+            <!-- Books List (Table) -->
+            <section>
+                <h2>Available Books</h2>
+                <table border="1" cellpadding="10">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Author</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for book in books %}
+                            <tr>
+                                <td><a href="{% url 'book_detail' book.id %}">{{ book.title }}</a></td>
+                                <td>{{ book.author }}</td>
+                                <td>
+                                    {% if book.taken_by %}
+                                        Taken by <a href="{% url 'user_profile' book.taken_by.username %}">{{ book.taken_by.username }}</a>
+                                    {% else %}
+                                        Available
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if not book.taken_by %}
+                                        <form method="post" action="{% url 'take_out_book' book.id %}">
+                                            {% csrf_token %}
+                                            <button type="submit">Take Out</button>
+                                        </form>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Users List -->
+            <section>
+                <h2>Registered Users</h2>
+                <ul>
+                    {% for user in users %}
+                        <li><a href="{% url 'user_profile' user.username %}">{{ user.username }}</a></li>
+                    {% endfor %}
+                </ul>
+            </section>
+
+        {% else %}
+        {% endif %}
+    </main>
+{% endblock %}

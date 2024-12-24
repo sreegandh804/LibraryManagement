@@ -6,6 +6,10 @@
 The **Library Management System** is a web application built using Django, allowing users to manage books, request books, view book details, and track book loans. The system allows users to sign up, log in, and interact with books, while an administrator can manage book requests and approvals.
 
 
+## Credentials of Super User/Librarian
+Username: sreeg
+Password: @Sreegandh381
+
 ## Time Spent & Thoughts
 
 I spent approximately 5-6 hours on this project from start to finish. 

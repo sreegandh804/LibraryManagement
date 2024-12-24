@@ -5,8 +5,11 @@
 
 The **Library Management System** is a web application built using Django, allowing users to manage books, request books, view book details, and track book loans. The system allows users to sign up, log in, and interact with books, while an administrator can manage book requests and approvals.
 
+## Live Application:
+The application is live and can be accessed at:
+https://librarymanagement-zq9i.onrender.com/
 
-## Credentials of Super User/Librarian
+## Credentials for Super User (Librarian)
 Username: sreeg
 Password: @Sreegandh381
 
